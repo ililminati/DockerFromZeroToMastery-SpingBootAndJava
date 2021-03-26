@@ -1,1 +1,24 @@
-{\rtf1}
+language: java
+jdk:
+    - oraclejdk11
+before_install: 
+    - sudo apt-get update
+    - cd app/
+    - echo "Let´s start Maven Package!!!"
+    - mvn clean package
+    - cd ..
+    - echo "Estou no diretório raiz..."
+script:
+    - docker-compose build
+
+before_deploy:
+    - echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
+deploy:
+    provider: script
+    script: 
+        docker push ililminati/docker_from_zero_to_mastery_java;
+    on: 
+        branch: master
+notification:
+    email: false
+    
