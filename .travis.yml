@@ -16,7 +16,8 @@ before_deploy:
 deploy:
     provider: script
     script: 
-        docker push ililminati/docker_from_zero_to_mastery_java;
+        docker tag docker_from_zero_to_mastery_java:latest "$DOCKER_USERNAME"/docker_from_zero_to_mastery_java:$TRAVIS_JOB_ID;
+        docker push "$DOCKER_USERNAME"/docker_from_zero_to_mastery_java;
     on: 
         branch: master
 notification:
